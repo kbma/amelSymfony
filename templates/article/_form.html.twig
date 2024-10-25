@@ -1,0 +1,43 @@
+{{ form_start(form) }}
+    <div class="row mb-3">
+        <div class="col-3">
+            {{ form_label(form.titre, 'TITRE') }}
+        </div>
+        <div class="col-9">
+            {{ form_widget(form.titre, {'attr': {'class': 'form-control'}}) }}
+        </div>
+    </div>
+    
+    <div class="row mb-3">
+        <div class="col-3">
+            {{ form_label(form.contenu, 'CONTENT') }}
+        </div>
+        <div class="col-9">
+            {{ form_widget(form.contenu, {'attr': {'class': 'form-control'}}) }}
+        </div>
+    </div>
+    
+    <div class="row mb-3">
+        <div class="col-3">
+            {{ form_label(form.dateCreation, 'CREATION DATE') }}
+        </div>
+        <div class="col-9">
+            {{ form_widget(form.dateCreation, {'attr': {'class': 'form-control'}}) }}
+        </div>
+    </div>
+    
+    <div class="row mb-3">
+        <div class="col-3">
+            {{ form_label(form.user, 'CREATOR') }}
+        </div>
+        <div class="col-9">
+            {{ form_widget(form.user, {'attr': {'class': 'form-control'}}) }}
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col">
+            <button class="btn btn-primary">{{ button_label|default('Enregistrer') }}</button>
+        </div>
+    </div>
+{{ form_end(form) }}

@@ -23,15 +23,14 @@
 		<div class="container">
 
 			{% if app.user %}
-				<p>Bienvenue,
+				<p class="alert">Bienvenue,
 					{{ app.user.email }}!</p>
-                    <a href="{{ path('app_logout') }}" class="btn btn-warning">Déconnexion</a>
-			
-            
+				<a href="{{ path('app_logout') }}" class="btn btn-warning mb-2">Déconnexion</a>
+
+
 			{% endif %}
 
 
-			
 			{% block body %}{% endblock %}
 		</div>
 

@@ -52,7 +52,10 @@ final class ArticleController extends AbstractController{
     #[Route('/{id}/edit', name: 'app_article_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Article $article, EntityManagerInterface $entityManager): Response
     {
-
+        // if ($article->getUser() !== $this->getUser()) {
+        //     $this->addFlash('error', 'You do not have permission to access this article.');
+        //     return $this->redirectToRoute('app_article_index');
+        // }    
         
         $form = $this->createForm(ArticleType::class, $article);
         $form->handleRequest($request);
@@ -72,6 +75,12 @@ final class ArticleController extends AbstractController{
     #[Route('/{id}', name: 'app_article_delete', methods: ['POST'])]
     public function delete(Request $request, Article $article, EntityManagerInterface $entityManager): Response
     {
+   
+        // if ($article->getUser() !== $this->getUser()) {
+        //     $this->addFlash('error', 'You do not have permission to access this article.');
+        //     return $this->redirectToRoute('app_article_index');
+        // }
+    
         if ($this->isCsrfTokenValid('delete'.$article->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($article);
             $entityManager->flush();

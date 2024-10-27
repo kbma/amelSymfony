@@ -31,7 +31,7 @@ final class ArticleController extends AbstractController{
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($article);
             $entityManager->flush();
-
+            $this->addFlash('success', 'l\'article est ajouté avec succés!');
             return $this->redirectToRoute('app_article_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -52,17 +52,17 @@ final class ArticleController extends AbstractController{
     #[Route('/{id}/edit', name: 'app_article_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Article $article, EntityManagerInterface $entityManager): Response
     {
-        // if ($article->getUser() !== $this->getUser()) {
-        //     $this->addFlash('error', 'You do not have permission to access this article.');
-        //     return $this->redirectToRoute('app_article_index');
-        // }    
+        if ($article->getUser() !== $this->getUser()) {
+            $this->addFlash('error', 'Vous n\'avez pas l\'autorisation d\'accéder à cet article.');
+            return $this->redirectToRoute('app_article_index');
+        }    
         
         $form = $this->createForm(ArticleType::class, $article);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
-
+            $this->addFlash('success', 'l\'article est modifié avec succés!');
             return $this->redirectToRoute('app_article_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -76,16 +76,16 @@ final class ArticleController extends AbstractController{
     public function delete(Request $request, Article $article, EntityManagerInterface $entityManager): Response
     {
    
-        // if ($article->getUser() !== $this->getUser()) {
-        //     $this->addFlash('error', 'You do not have permission to access this article.');
-        //     return $this->redirectToRoute('app_article_index');
-        // }
+        if ($article->getUser() !== $this->getUser()) {
+            $this->addFlash('error', 'Vous n\'avez pas l\'autorisation d\'accéder à cet article.');
+            return $this->redirectToRoute('app_article_index');
+        } 
     
         if ($this->isCsrfTokenValid('delete'.$article->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($article);
             $entityManager->flush();
         }
-
+        $this->addFlash('success', 'l\'article est supprimé avec succés!');
         return $this->redirectToRoute('app_article_index', [], Response::HTTP_SEE_OTHER);
     }
 }
